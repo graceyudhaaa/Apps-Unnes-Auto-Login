@@ -1,10 +1,4 @@
 """
-fill in your unnes credentials
-"""
-username = "@students.unnes.ac.id"
-password = ""
-
-"""
 please change according to your default web browser driver
 
 Supported browser:

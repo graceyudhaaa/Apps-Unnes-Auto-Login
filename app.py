@@ -1,3 +1,4 @@
+import os
 import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -5,8 +6,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from webdriver_manager.microsoft import EdgeChromiumDriverManager
-from settings import username, password, browser, driver_version
+from settings import browser, driver_version
+from dotenv import load_dotenv
+load_dotenv()
 
 def setup_driver(browser, driver_version):
     if browser == "chrome":
@@ -97,8 +99,11 @@ def elena():
     click("//input[contains(@class, 'btn btn-lg btn-primary')]", By.XPATH)
 
 if __name__ == "__main__":
+    USERNAME = os.getenv("EMAIL_ELENA")
+    PASSWORD = os.getenv("PASSWORD_ELENA")
+
     driver = setup_driver(browser, driver_version)
     setup_timeout(60)
-    login(username, password)
+    login(USERNAME, PASSWORD)
     elena()
 

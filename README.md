@@ -38,11 +38,12 @@ it essentialy just python + selenium script that can run with shell script.
 - sometimes google will still want you to confirm so keep your phone with it
 
 ## Further reading and dependency
-This project was made possible with Selenium and Webdriver-manager *(Thank You!)*. 
+This project was made possible with Selenium, Webdriver-manager and python-dotenv *(Thank You!)*. 
 
 if you have any trouble with this app i would recommend to go into the source code of both this repo and dependency
 
 - https://github.com/graceyudhaaa/Elena-Auto-login
 - https://github.com/SeleniumHQ/selenium
 - https://github.com/SergeyPirogov/webdriver_manager
+- https://github.com/theskumar/python-dotenv
 

@@ -22,20 +22,20 @@ def setup_driver(browser, driver_version):
     elif browser == "edge":
         from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
-        driver = webdriver.Edge(EdgeChromiumDriverManager().install())
+        driver = webdriver.Edge(EdgeChromiumDriverManager(driver_version).install())
     elif browser == "opera":
         from webdriver_manager.opera import OperaDriverManager
 
-        driver = webdriver.Opera(executable_path=OperaDriverManager().install())
+        driver = webdriver.Opera(executable_path=OperaDriverManager(driver_version).install())
     elif browser == "chromium":
         from webdriver_manager.chrome import ChromeDriverManager
         from webdriver_manager.utils import ChromeType
 
-        driver = webdriver.Chrome(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
+        driver = webdriver.Chrome(ChromeDriverManager(driver_version, chrome_type=ChromeType.CHROMIUM).install())
     elif browser == "ie":
         from webdriver_manager.microsoft import IEDriverManager
 
-        driver = webdriver.Ie(IEDriverManager().install())
+        driver = webdriver.Ie(IEDriverManager(driver_version,).install())
     else:
         raise "Browser not recognizable, please check the supported browser and the browser spelling in settings file"
 
@@ -95,7 +95,7 @@ def elena():
     # time.sleep(5)
     driver.switch_to.frame(driver.find_element_by_class_name("xcomponent-component-frame"))
     # print(driver.find_element_by_tag_name("body").text)
-    wait_until(By.CLASS_NAME, "jumbotron")
+    wait_until(By.CLASS_NAME, "authfy-login")
     click("//input[contains(@class, 'btn btn-lg btn-primary')]", By.XPATH)
 
 if __name__ == "__main__":

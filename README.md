@@ -30,9 +30,10 @@ it essentialy just python + selenium script that can run with shell script.
 ## How to use
 
 1. clone this repository
-2. open up the `settings.py` and fill in the required value (username, password, browser and webdriver version)
-3. copy `run.sh/run-mac.sh` into easy to reach destination (i.e desktop) **as a shortcut**.
-4. run it via the shortcut, for the first run the script will download the webdriver and stores it in cache so it will run from cache for the next execution
+2. open up the `settings.py` and fill in the required value (browser and webdriver version)
+3. open up the `.env_example` rename it to `.env` and fill in the required value (elena email and password)
+4. copy `run.sh/run-mac.sh` into easy to reach destination (i.e desktop) **as a shortcut**.
+5. run it via the shortcut, for the first run the script will download the webdriver and stores it in cache so it will run from cache for the next execution
 
 ## Bug
 - sometimes google will still want you to confirm so keep your phone with it

@@ -63,7 +63,7 @@ def login(username, password):
     '''
     Login to apps.unnes, only accept using Google auth.
 
-    please fill username and password in setting file
+    please fill username and password in .env file
     '''    
 
     driver.get("https://apps.unnes.ac.id/")
@@ -96,6 +96,7 @@ def elena():
     driver.switch_to.frame(driver.find_element_by_class_name("xcomponent-component-frame"))
     # print(driver.find_element_by_tag_name("body").text)
     wait_until(By.CLASS_NAME, "authfy-login")
+    click("//input[contains(@class, 'btn btn-lg btn-primary')]", By.XPATH)
     click("//input[contains(@class, 'btn btn-lg btn-primary')]", By.XPATH)
 
 if __name__ == "__main__":

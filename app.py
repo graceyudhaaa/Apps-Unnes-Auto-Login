@@ -104,7 +104,7 @@ if __name__ == "__main__":
     PASSWORD = os.getenv("PASSWORD_ELENA")
 
     driver = setup_driver(browser, driver_version)
-    setup_timeout(60)
+    setup_timeout(60 * 5)
     login(USERNAME, PASSWORD)
     elena()
 

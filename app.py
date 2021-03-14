@@ -14,28 +14,28 @@ def setup_driver(browser, driver_version):
     if browser == "chrome":
         from webdriver_manager.chrome import ChromeDriverManager
         
-        driver = webdriver.Chrome(ChromeDriverManager(driver_version).install())
+        driver = webdriver.Chrome(ChromeDriverManager(driver_version, cache_valid_range=183).install())
     elif browser == "firefox":
         from webdriver_manager.firefox import GeckoDriverManager
 
-        driver = webdriver.Firefox(executable_path=GeckoDriverManager(driver_version).install())
+        driver = webdriver.Firefox(executable_path=GeckoDriverManager(driver_version, cache_valid_range=183).install())
     elif browser == "edge":
         from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
-        driver = webdriver.Edge(EdgeChromiumDriverManager(driver_version).install())
+        driver = webdriver.Edge(EdgeChromiumDriverManager(driver_version, cache_valid_range=183).install())
     elif browser == "opera":
         from webdriver_manager.opera import OperaDriverManager
 
-        driver = webdriver.Opera(executable_path=OperaDriverManager(driver_version).install())
+        driver = webdriver.Opera(executable_path=OperaDriverManager(driver_version, cache_valid_range=183).install())
     elif browser == "chromium":
         from webdriver_manager.chrome import ChromeDriverManager
         from webdriver_manager.utils import ChromeType
 
-        driver = webdriver.Chrome(ChromeDriverManager(driver_version, chrome_type=ChromeType.CHROMIUM).install())
+        driver = webdriver.Chrome(ChromeDriverManager(driver_version, cache_valid_range=183, chrome_type=ChromeType.CHROMIUM).install())
     elif browser == "ie":
         from webdriver_manager.microsoft import IEDriverManager
 
-        driver = webdriver.Ie(IEDriverManager(driver_version,).install())
+        driver = webdriver.Ie(IEDriverManager(driver_version, cache_valid_range=183).install())
     else:
         raise "Browser not recognizable, please check the supported browser and the browser spelling in settings file"
 

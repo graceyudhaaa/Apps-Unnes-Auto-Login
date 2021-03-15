@@ -44,17 +44,20 @@ def setup_driver(browser, driver_version):
 def setup_timeout(timeout):
     driver.wait = WebDriverWait(driver, timeout)
 
-def wait_until(By, selector):
+def wait_until(By, selector, conditions):
     driver.wait.until(
-        EC.presence_of_element_located((By, selector))
+        conditions((By, selector))
     )
 
-def click(selector, By):
+def click_button(selector, By):
+    wait_until(By, selector, EC.presence_of_all_elements_located)   
+    wait_until(By, selector, EC.visibility_of_any_elements_located)
+
     driver.wait.until(
         EC.element_to_be_clickable((By, selector))
     ).click()
 
-def send_keys(keys, selector, By):
+def send_form(keys, selector, By):
     driver.wait.until(
         EC.element_to_be_clickable((By, selector))
     ).send_keys(keys)
@@ -68,20 +71,20 @@ def login(username, password):
 
     driver.get("https://apps.unnes.ac.id/")
     window_before = driver.window_handles[0]
-    click("g-signin2", By.CLASS_NAME)
+    click_button("g-signin2", By.CLASS_NAME)
 
     #switch to login window
     window_after = driver.window_handles[1]
     driver.switch_to.window(window_after)
-    send_keys(username, '//input[@type="email"]', By.XPATH)
-    click('/html/body/div[1]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div[1]/div/div', By.XPATH)
+    send_form(username, '//input[@type="email"]', By.XPATH)
+    click_button('/html/body/div[1]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div[1]/div/div', By.XPATH)
 
     # time.sleep(10)
     # isi password
-    send_keys(password, "//input[@type='password']", By.XPATH)
+    send_form(password, "//input[@type='password']", By.XPATH)
 
     # next
-    click("/html/body/div[1]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div[1]/div/div", By.XPATH)
+    click_button("/html/body/div[1]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div[1]/div/div", By.XPATH)
     driver.switch_to.window(window_before)
 
 # go to elena dashboard
@@ -89,15 +92,15 @@ def elena():
     """
     go to active semester
     """
-    click("//a[contains(@href, 'https://apps.unnes.ac.id/30')]", By.XPATH)
-    wait_until(By.CLASS_NAME, "xcomponent-outlet")
+    click_button("//a[contains(@href, 'https://apps.unnes.ac.id/30')]", By.XPATH)
+    wait_until(By.CLASS_NAME, "xcomponent-outlet", EC.visibility_of_any_elements_located)
     # print(driver.find_element_by_tag_name("body").text)
     # time.sleep(5)
     driver.switch_to.frame(driver.find_element_by_class_name("xcomponent-component-frame"))
     # print(driver.find_element_by_tag_name("body").text)
-    wait_until(By.CLASS_NAME, "authfy-login")
-    click("//input[contains(@class, 'btn btn-lg btn-primary')]", By.XPATH)
-    click("//input[contains(@class, 'btn btn-lg btn-primary')]", By.XPATH)
+    wait_until(By.CLASS_NAME, "authfy-login", EC.visibility_of_any_elements_located)
+    click_button("//input[contains(@class, 'btn btn-lg btn-primary')]", By.XPATH)
+    click_button("//input[contains(@class, 'btn btn-lg btn-primary')]", By.XPATH)
 
 if __name__ == "__main__":
     USERNAME = os.getenv("EMAIL_ELENA")

@@ -19,10 +19,12 @@ Supported driver:
 *: please make sure where you install opera, read the webdriver-manager doc in https://github.com/SergeyPirogov/webdriver_manager/blob/master/README.md 
 """
 
-browser = "edge"
+browser = "chrome"
 
 """
 please check your browser version and supported browser driver.
 default value to be latest version
 """
 driver_version = "latest"
+
+webdriver_path = "./chromedriver"

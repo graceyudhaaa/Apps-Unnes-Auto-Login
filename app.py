@@ -1,4 +1,7 @@
 import os
+import argparse
+import time
+import getpass
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -8,6 +11,50 @@ from selenium.webdriver.support import expected_conditions as EC
 from settings import browser, driver_version, webdriver_path
 from dotenv import load_dotenv
 load_dotenv()
+
+
+class Unnes:
+    def __init__(self, args) -> None:
+        self.apps_code = args.apps_code
+        self.timeout = args.timeout
+
+        if args.username is not None:
+            self.USERNAME = args.username
+        else:
+            try:
+                self.USERNAME = os.getenv("EMAIL")
+            except BaseException:
+                self.USERNAME = None
+
+        if args.password is not None:
+            self.PASSWORD = args.password
+        else:
+            try:
+                self.PASSWORD = os.getenv("PASSWORD")
+            except BaseException:
+                self.PASSWORD = None
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Script automasi untuk login platform apps.unnes.ac.id")
+    parser.add_argument(
+        "-a",
+        "--apps-code",
+        choices=[30, 23, 28, "elena"],
+        required=True,
+        type=int,
+        help="Kode aplikasi pada platform apps.unnes.ac.id")
+    parser.add_argument("-u", "--username", help="Email Unnes")
+    parser.add_argument("-p", "--password", help="Password email Unnes")
+    parser.add_argument(
+        "-t",
+        "--timeout",
+        default=60 * 5,
+        type=int,
+        help="Limit waktu server timeout (dalam detik)")
+
+    return parser.parse_args()
 
 
 def setup_driver(browser, driver_version, webdriver_path):
@@ -147,7 +194,6 @@ def login(username, password):
         '/html/body/div[1]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div[1]/div/div',
         By.XPATH)
 
-    # time.sleep(10)
     # isi password
     send_form(password, "//input[@type='password']", By.XPATH)
 
@@ -156,8 +202,6 @@ def login(username, password):
         "/html/body/div[1]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[2]/div/div[1]/div/div",
         By.XPATH)
     driver.switch_to.window(window_before)
-
-# go to elena dashboard
 
 
 def elena():
@@ -184,10 +228,21 @@ def elena():
 
 
 if __name__ == "__main__":
-    USERNAME = os.getenv("EMAIL_ELENA")
-    PASSWORD = os.getenv("PASSWORD_ELENA")
+    args = parse_args()
+    account = Unnes(args)
+    if account.USERNAME is None:
+        account.USERNAME = input("Masukan Email Unnes: ")
+
+    if account.PASSWORD is None:
+        account.PASSWORD = getpass.getpass("Masukan Password Email Unnes: ")
 
     driver = setup_driver(browser, driver_version, webdriver_path)
     setup_timeout(60 * 5)
-    login(USERNAME, PASSWORD)
-    elena()
+    login(account.USERNAME, account.PASSWORD)
+    if account.apps_code == 30:
+        elena()
+    else:
+        time.sleep(3)
+        click_button(
+            f"//a[contains(@href, 'https://apps.unnes.ac.id/{account.apps_code}')]",
+            By.XPATH)
